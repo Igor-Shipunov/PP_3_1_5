@@ -1,53 +1,29 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    UserService userService;
 
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/new")
-    public String addNewUser(Model model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
 
-    @PostMapping()
-    public String createNewUser(@ModelAttribute("user") User user) {
-        userService.createNewUser(user);
-        return "redirect:/user/main";
-    }
-    @GetMapping(value = "/main")
-    public String mainPage(Model model) {
-        model.addAttribute("allUsers",userService.getAllUsers());
-        return "main";
-    }
-
-    @GetMapping(value = "/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "/edit";
-    }
-
-    @PatchMapping(value = "/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
-        return "redirect:/user/main";
-    }
-
-    @GetMapping("/{id}/delete")
-    public String deleteUser(@PathVariable("id") int id) {
-        userService.deleteUser(userService.getUserById(id));
-        return "redirect:/user/main";
+    @GetMapping()
+    public String userHomePage(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
+        model.addAttribute("userInfo", user);
+        return "userHomePage";
     }
 }

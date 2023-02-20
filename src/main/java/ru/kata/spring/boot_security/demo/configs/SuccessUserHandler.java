@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 
 @Component
-public class SuccessUserHandler implements AuthenticationSuccessHandler {//TODO
+public class SuccessUserHandler implements AuthenticationSuccessHandler {
     // Spring Security использует объект Authentication, пользователя авторизованной сессии.
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
@@ -18,7 +18,7 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {//TODO
         if (roles.contains("ROLE_USER")) {
             httpServletResponse.sendRedirect("/user");
         } else {
-            httpServletResponse.sendRedirect("/");
+            httpServletResponse.sendRedirect("/admin");
         }
     }
 

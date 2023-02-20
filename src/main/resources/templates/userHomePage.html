@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>User home page</title>
+</head>
+<body>
+<h1>Your info:</h1>
+<th:block th:object="${userInfo}">
+    <h2 th:label="name">Name: </h2>
+    <h1 th:text="${userInfo.getName()}" id="name"></h1>
+    <h2 th:label="lastname">Lastname: </h2>
+    <h1 th:text="${userInfo.getLastName()}" id="lastname"></h1>
+    <h2 th:label="number">Number: </h2>
+    <h1 th:text="${userInfo.getNumber()}" id="number"></h1>
+    <h2 th:label="username">Username: </h2>
+    <h1 th:text="${userInfo.getUsername()}" id="username"></h1>
+    <h2 th:label="password">Password: </h2>
+    <h1 th:text="${userInfo.getPassword()}" id="password"></h1>
+    <h2 th:label="roles">Roles: </h2>
+    <h1 th:text="${userInfo.getRoles()}" id="roles"></h1>>
+    <p><a type="button" th:href="@{/logout}">Logout</a></p>
+</th:block>
+</body>
+</html>
