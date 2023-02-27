@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -25,9 +26,10 @@ public class AdminController {
     }
 
     @GetMapping(value = "/new")
-    public String addNewUser(Model model) {
+    public String addNewUser(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("userInfo", user);
         return "newUser";
     }
 
@@ -38,8 +40,10 @@ public class AdminController {
         return "redirect:/admin";
     }
     @GetMapping()
-    public String mainPage(Model model) {
+    public String mainPage(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
         model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("userInfo", user);
+        model.addAttribute("roles", roleService.getAllRoles());
         return "mainAdminPage";
     }
 

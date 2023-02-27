@@ -52,7 +52,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void updateUser(User user) {
-
         userRepository.saveAndFlush(user);
     }
 

@@ -1,24 +1,91 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
 <head>
-    <title>User home page</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>User page</title>
 </head>
 <body>
-<h1>Your info:</h1>
-<th:block th:object="${userInfo}">
-    <h2 th:label="name">Name: </h2>
-    <h1 th:text="${userInfo.getName()}" id="name"></h1>
-    <h2 th:label="lastname">Lastname: </h2>
-    <h1 th:text="${userInfo.getLastName()}" id="lastname"></h1>
-    <h2 th:label="number">Number: </h2>
-    <h1 th:text="${userInfo.getNumber()}" id="number"></h1>
-    <h2 th:label="username">Username: </h2>
-    <h1 th:text="${userInfo.getUsername()}" id="username"></h1>
-    <h2 th:label="password">Password: </h2>
-    <h1 th:text="${userInfo.getPassword()}" id="password"></h1>
-    <h2 th:label="roles">Roles: </h2>
-    <h1 th:text="${userInfo.getRoles()}" id="roles"></h1>>
-    <p><a type="button" th:href="@{/logout}">Logout</a></p>
-</th:block>
+    <div class="container-fluid" style="background-color: rgba(0,0,0,0.85); color: white">
+        <div class="row">
+            <div class="col-sm-6 col-md-8 text-start">
+                <h3>
+                <b><span class="align-middle" th:text="${userInfo.getUsername}"></span></b>
+                <span class="align-middle">with roles:</span>
+                <span class="align-middle" th:each="role: ${userInfo.getRoles}" th:text="${role.toString()} + ' '"></span>
+                </h3>
+            </div>
+
+            <div class="col-6 col-md-4 text-end">
+                <h6>
+                    <a href="/logout" style="color: gray; text-decoration: none">Logout</a>
+                </h6>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid min-vh-100 d-flex flex-column">
+        <div class="row flex-grow-1">
+            <div class="col-md-2">
+                <br>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" sec:authorize="hasRole('ADMIN')">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/user" sec:authorize="(hasAnyRole('ADMIN', 'USER'))">User</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10" style="background-color: rgba(0,0,0,0.03)">
+                <div class="h1">
+                    <h1>User information page</h1>
+                </div>
+
+                <div class="h3" style="background-color: rgba(0,0,0,0.06)">
+                    About user
+                </div>
+
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:text="${userInfo.getId()}"></td>
+                                    <td th:text="${userInfo.getName()}"></td>
+                                    <td th:text="${userInfo.getLastName()}"></td>
+                                    <td th:text="${userInfo.getAge()}"></td>
+                                    <td th:text="${userInfo.getUsername()}"></td>
+                                    <td>
+                                        <th:block th:each="role: ${userInfo.getRoles()}"
+                                                  th:text="${role.toString()} + ' '">
+                                        </th:block>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
 </body>
 </html>

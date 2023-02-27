@@ -23,10 +23,10 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column
-    private String number;
+    private int age;
 
     @Column
-    private String username;
+    private String username; //email in templates
 
     @Column
     private String password;
@@ -37,10 +37,10 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String name, String lastName, String number, String username, String password, Set<Role> roles) {
+    public User(String name, String lastName, int age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
-        this.number = number;
+        this.age = age;
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -105,12 +105,12 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public String getNumber() {
-        return number;
+    public int getAge() {
+        return age;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setUsername(String username) {
@@ -136,7 +136,7 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", number='" + number + '\'' +
+                ", number='" + age + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
