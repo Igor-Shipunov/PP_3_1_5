@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles = new HashSet<>();
 

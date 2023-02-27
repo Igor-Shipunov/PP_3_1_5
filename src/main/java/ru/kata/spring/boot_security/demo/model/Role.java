@@ -10,10 +10,10 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue
-    int role_id;
+    private int role_id;
 
     @Column
-    String name;
+    private String name;
 
     public Role(){}
 
