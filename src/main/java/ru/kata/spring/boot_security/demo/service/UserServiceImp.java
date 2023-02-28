@@ -52,10 +52,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void updateUser(User user) {
-        if (!passwordEncoder.matches(user.getPassword(), userRepository.findById(user.getId()).get().getPassword())) {
+        String currentPassword = userRepository.findById(user.getId()).get().getPassword();
+        if (!passwordEncoder.matches(user.getPassword(), currentPassword)) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
-            user.setPassword(userRepository.findById(user.getId()).get().getPassword());
+            user.setPassword(currentPassword);
         }
         userRepository.saveAndFlush(user);
     }
