@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})//for InvalidDefinitionException
 @Entity
 @Table(name = "users")

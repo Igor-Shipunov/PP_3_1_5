@@ -1,4 +1,4 @@
-const allUsersTable = document.getElementById("mainTable");
+const UsersTable = document.getElementById("mainTable");
 
 async function showAllUsers() {
     fetch("api/admin")
@@ -24,10 +24,11 @@ async function showAllUsers() {
                              <button class="btn btn-danger" type="button"
                              data-bs-toggle="modal" data-bs-target="#modalDelete"
                              onclick="deleteModal(${user.id})">Delete</button></td>
-                        </tr>`;
+                        </tr>`
                     })
-                    allUsersTable.innerHTML = temp;
+                    UsersTable.innerHTML = temp;
                 }
             }
-        )
+            )
 }
+showAllUsers()

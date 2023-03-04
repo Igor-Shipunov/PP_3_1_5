@@ -5,14 +5,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,12 +26,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
 
     private final UserRepository userRepository;
+
     private final PasswordEncoder passwordEncoder;
 
+    private final RoleRepository roleRepository;
+
     @Autowired
-    public UserServiceImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -43,7 +52,21 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Transactional
     public void saveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(matchRoles(user));
         userRepository.saveAndFlush(user);
+    }
+
+    private Set<Role> matchRoles(User user) { //костыль для добавления ролей, иначе TransientObjectException
+        Set<Role> newUserRoles = new HashSet<>();
+        List<Role> savedRoles = roleRepository.findAll();
+        for (Role role : user.getRoles()) {
+            if (role.getName().equals(savedRoles.get(0).getName())) {
+                newUserRoles.add(savedRoles.get(0));
+            } else if (role.getName().equals(savedRoles.get(1).getName())) {
+                newUserRoles.add(savedRoles.get(1));
+            }
+        }
+        return newUserRoles;
     }
 
     @Override

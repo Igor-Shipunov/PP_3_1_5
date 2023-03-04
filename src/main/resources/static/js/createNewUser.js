@@ -32,11 +32,11 @@ addUserForm.addEventListener('submit', (e)=>{
             //roles: userTestRoleArr  //For testing
         })
     })
-        .then(user => {
+        /*.then(user => {
             const usersArr = [];
             usersArr.push(user);
-            /*showAllUsers(usersArr);*/
+            /!*showAllUsers(usersArr);*!/
         })
         .then(() => {
-            document.getElementById("nav-admin-tab").click();})
+            document.getElementById("nav-admin-tab").click();})*/
 })
