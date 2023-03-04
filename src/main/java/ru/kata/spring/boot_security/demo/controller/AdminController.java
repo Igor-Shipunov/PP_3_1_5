@@ -25,29 +25,30 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = "/new")
+    @GetMapping()
+    public String mainPage(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
+        /*model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("userInfo", user);
+        model.addAttribute("roles", roleService.getAllRoles());*/
+        return "mainAdminPage";
+    }
+
+    /*@GetMapping(value = "/new")
     public String addNewUser(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("userInfo", user);
         return "newUser";
-    }
+    }*/
 
-    @PostMapping()
+    /*@PostMapping()
     public String createNewUser(@ModelAttribute("user") User user, @ModelAttribute("roles") List<Role> roles) {
         userService.saveNewUser(user);
         roleService.saveUserRoles(roles);
         return "redirect:/admin";
-    }
-    @GetMapping()
-    public String mainPage(Model model, @CurrentSecurityContext(expression = "authentication.principal") User user) {
-        model.addAttribute("allUsers", userService.getAllUsers());
-        model.addAttribute("userInfo", user);
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "mainAdminPage";
-    }
+    }*/
 
-    @GetMapping(value = "/{id}/edit")
+    /*@GetMapping(value = "/{id}/edit")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("roles", roleService.getAllRoles());
@@ -64,5 +65,5 @@ public class AdminController {
     public String deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(userService.getUserById(id));
         return "redirect:/admin";
-    }
+    }*/
 }

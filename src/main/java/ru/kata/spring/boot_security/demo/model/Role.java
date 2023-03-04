@@ -17,9 +17,10 @@ public class Role implements GrantedAuthority {
 
     public Role(){}
 
-    public Role(int role_id, String name) {
-        this.role_id = role_id;
+    public Role(String name) { //deleted role_id
+        //this.role_id = role_id;
         this.name = name;
+        System.out.println("role created " + name);
 
     }
 
@@ -47,6 +48,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return name.substring(5);
+        return name;
+        //return name.substring(5); // <- как должно быть
     }
 }
