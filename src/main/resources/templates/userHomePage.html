@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="en">
@@ -12,12 +13,11 @@
         <div class="row">
             <div class="col-sm-6 col-md-8 text-start">
                 <h3>
-                <b><span class="align-middle" th:text="${userInfo.getUsername}"></span></b>
-                <span class="align-middle">with roles:</span>
-                <span class="align-middle" th:each="role: ${userInfo.getRoles}" th:text="${role.toString()} + ' '"></span>
+                    <b><span class="align-middle" id="usernameOfCurrentUser"></span></b>
+                    <span class="align-middle">with roles:</span>
+                    <span class="align-middle" id="rolesOfCurrentUser"></span>
                 </h3>
             </div>
-
             <div class="col-6 col-md-4 text-end">
                 <h6>
                     <a href="/logout" style="color: gray; text-decoration: none">Logout</a>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-10" style="background-color: rgba(0,0,0,0.03)">
                 <div class="h1">
-                    <h1>User information page</h1>
+                    <h1>User information-page</h1>
                 </div>
 
                 <div class="h3" style="background-color: rgba(0,0,0,0.06)">
@@ -51,41 +51,25 @@
 
                 <div class="card">
                     <div class="card-block">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="usersTable">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>First Name</th>
+                                <th>Name</th>
                                 <th>Last Name</th>
                                 <th>Age</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Username</th>
+                                <th>Roles</th>
                             </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td th:text="${userInfo.getId()}"></td>
-                                    <td th:text="${userInfo.getName()}"></td>
-                                    <td th:text="${userInfo.getLastName()}"></td>
-                                    <td th:text="${userInfo.getAge()}"></td>
-                                    <td th:text="${userInfo.getUsername()}"></td>
-                                    <td>
-                                        <th:block th:each="role: ${userInfo.getRoles()}"
-                                                  th:text="${role.toString()} + ' '">
-                                        </th:block>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+    <script src="/js/userPage.js"></script>
 </body>
 </html>

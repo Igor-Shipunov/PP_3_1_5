@@ -1,0 +1,34 @@
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/*Edit and delete buttons*/
+.deleteBtn {
+  background-color: rgb(189, 28, 28);
+  border-color: rgb(189, 28, 28);
+  color: white;
+  border-radius: 8px;
+}
+.editBtn {
+  background-color: rgb(42, 181, 209);
+  border-color: rgb(42, 181, 209);
+  color: white;
+  border-radius: 6px;
+}

@@ -1,22 +1,17 @@
 const addUserForm = document.getElementById("add-user-form")
+const currentUsername = document.getElementById("usernameOfCurrentUser");
+const currentRoles = document.getElementById("rolesOfCurrentUser");
 
-addUserForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
+addUserForm.addEventListener('submit', ()=>{
+    const name = document.getElementById('name').value;
+    const lastName = document.getElementById('lastName').value;
+    const age = document.getElementById('age').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const roles = Array.from(document.getElementById("newUserRoles").selectedOptions).map(role => "ROLE_" + role.value);
+    //console.log(roles);
 
-    let name = document.getElementById('name').value;
-    let lastName = document.getElementById('lastName').value;
-    let age = document.getElementById('age').value;
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let roles = Array.from(document.getElementById("newUserRoles").selectedOptions).map(role => "ROLE_" + role.value);
-    console.log(roles);
-
-    /*let userTestRole = {      //For testing
-        name : 'ROLE_ADMIN'
-    };
-    let userTestRoleArr = Array.of(userTestRole);*/
-
-    fetch('api/new', {
+    fetch(' http://localhost:8080/api/new', {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -26,17 +21,27 @@ addUserForm.addEventListener('submit', (e)=>{
             name: name,
             lastName: lastName,
             age: age,
-            username: email,
+            username: username,
             password: password,
             roles: roles,
-            //roles: userTestRoleArr  //For testing
         })
     })
-        /*.then(user => {
-            const usersArr = [];
-            usersArr.push(user);
-            /!*showAllUsers(usersArr);*!/
-        })
-        .then(() => {
-            document.getElementById("nav-admin-tab").click();})*/
 })
+
+function getCurrentUser() {
+    fetch("http://localhost:8080/api/currentUser")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(currentUser => showCurrentUserData(currentUser))
+}
+
+function showCurrentUserData(currentUser) {
+    currentUsername.innerText = currentUser.username;
+    currentRoles.innerText = currentUser.roles.map(role => " " + role.name.substring(5));
+}
+
+getCurrentUser();

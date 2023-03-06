@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -10,7 +9,7 @@ import javax.persistence.*;
 import java.util.*;
 
 
-//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})//for InvalidDefinitionException
 @Entity
 @Table(name = "users")
@@ -35,7 +34,7 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY) //was cascade.refresh
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles = new HashSet<>();
 

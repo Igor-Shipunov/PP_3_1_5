@@ -12,12 +12,11 @@ import ru.kata.spring.boot_security.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 
 @Service
@@ -56,7 +55,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         userRepository.saveAndFlush(user);
     }
 
-    private Set<Role> matchRoles(User user) { //костыль для добавления ролей, иначе TransientObjectException
+    private Set<Role> matchRoles(User user) { //костыль для добавления и изменения ролей, иначе TransientObjectException
         Set<Role> newUserRoles = new HashSet<>();
         List<Role> savedRoles = roleRepository.findAll();
         for (Role role : user.getRoles()) {
@@ -81,6 +80,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         } else {
             user.setPassword(currentPassword);
         }
+        user.setRoles(matchRoles(user));
         userRepository.saveAndFlush(user);
     }
 

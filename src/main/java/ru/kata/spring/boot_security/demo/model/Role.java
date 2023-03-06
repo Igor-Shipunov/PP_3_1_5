@@ -17,10 +17,8 @@ public class Role implements GrantedAuthority {
 
     public Role(){}
 
-    public Role(String name) { //deleted role_id
-        //this.role_id = role_id;
+    public Role(String name) {
         this.name = name;
-        System.out.println("role created " + name);
 
     }
 
