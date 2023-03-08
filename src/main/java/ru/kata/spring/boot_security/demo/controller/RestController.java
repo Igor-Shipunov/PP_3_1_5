@@ -39,7 +39,6 @@ public class RestController {
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<HttpStatus> updateUser(@RequestBody User user) {
-        System.out.println(user);
         userService.updateUser(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }

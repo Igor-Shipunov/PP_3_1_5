@@ -28,13 +28,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserServiceImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -51,11 +49,10 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Transactional
     public void saveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(matchRoles(user));
         userRepository.saveAndFlush(user);
     }
 
-    private Set<Role> matchRoles(User user) { //костыль для добавления и изменения ролей, иначе TransientObjectException
+    /*private Set<Role> matchRoles(User user) { //костыль для добавления и изменения ролей, иначе TransientObjectException
         Set<Role> newUserRoles = new HashSet<>();
         List<Role> savedRoles = roleRepository.findAll();
         for (Role role : user.getRoles()) {
@@ -66,7 +63,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
             }
         }
         return newUserRoles;
-    }
+    }*/
 
     @Override
     public List<User> getAllUsers() {return userRepository.findAll();}
@@ -80,7 +77,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
         } else {
             user.setPassword(currentPassword);
         }
-        user.setRoles(matchRoles(user));
         userRepository.saveAndFlush(user);
     }
 
